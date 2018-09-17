@@ -33,7 +33,7 @@ namespace Braspag.Sdk.Tests
                 Transaction = new TransactionData
                 {
                     OrderId = DateTime.Now.Ticks.ToString(),
-                    Date = "2018-09-15 13:30:00.860",
+                    Date = DateTime.Now.ToString("O"),
                     Amount = 1000
                 },
                 Card = new CardData
@@ -55,6 +55,10 @@ namespace Braspag.Sdk.Tests
             var response = await sut.PerformAnalysisAsync(request, new MerchantCredentials { AccessToken = authResponse.Token, MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97" } );
 
             Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.NotNull(response.AnalysisResult);
+            Assert.NotNull(response.Transaction);
+            Assert.NotNull(response.RequestId);
+            Assert.Null(response.ErrorDataCollection);
         }
     }
 }

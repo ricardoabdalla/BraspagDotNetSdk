@@ -12,5 +12,11 @@ namespace Braspag.Sdk.Contracts.Velocity
         public TransactionData Transaction { get; set; }
 
         public List<ErrorData> ErrorDataCollection { get; set; }
+
+        public EmailageResultData EmailageResult { get; set; }
+
+        public CredilinkResultData CredilinkResult { get; set; }
+
+        public string RequestId { get; set; }
     }
 }

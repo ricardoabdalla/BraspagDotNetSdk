@@ -1,6 +1,4 @@
-﻿using Braspag.Sdk.Common;
-using RestSharp.Deserializers;
-using System;
+﻿using RestSharp.Deserializers;
 using System.Net;
 
 namespace Braspag.Sdk.Contracts.BraspagAuth
