@@ -38,6 +38,7 @@ namespace Braspag.Sdk.NetCore.ExampleApp
             Console.WriteLine($"Card Number: {getCreditCardResponse.CardNumber}");
             Console.WriteLine($"Card Holder: {getCreditCardResponse.CardHolder}");
             Console.WriteLine($"Card Expiration: {getCreditCardResponse.CardExpiration}");
+            Console.WriteLine();
         }
 
         private static async Task<SaveCreditCardResponse> SaveCreditCardAsync(ICartaoProtegidoClient client)

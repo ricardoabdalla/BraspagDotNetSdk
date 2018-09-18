@@ -9,4 +9,10 @@
     <ProjectReference Include="..\Braspag.Sdk\Braspag.Sdk.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.TestPlatform.CoreUtilities">
+      <HintPath>..\..\..\..\Users\ricardo\.nuget\packages\microsoft.testplatform.objectmodel\15.8.0\lib\netstandard1.5\Microsoft.TestPlatform.CoreUtilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

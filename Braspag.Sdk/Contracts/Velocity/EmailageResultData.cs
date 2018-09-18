@@ -8,7 +8,7 @@
 
         public int Score { get; set; }
 
-        public string ScoreDescriptionId { get; set; }
+        public string ScoreDescription { get; set; }
 
         public string ReasonId { get; set; }
 
