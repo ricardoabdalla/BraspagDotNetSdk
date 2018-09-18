@@ -64,8 +64,6 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public ExternalAuthenticationData ExternalAuthentication { get; set; }
 
-        public AvsDataRequest Avs { get; set; }
-
         public FraudAnalysisRequestData FraudAnalysis { get; set; }
 
         public RecurrentPaymentDataRequest RecurrentPayment { get; set; }

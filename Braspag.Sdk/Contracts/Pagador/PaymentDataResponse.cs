@@ -26,8 +26,6 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// </summary>
         public string AuthorizationCode { get; set; }
 
-        public AvsDataRequest Avs { get; set; }
-
         public string BoletoNumber { get; set; }
 
         public long? CapturedAmount { get; set; }

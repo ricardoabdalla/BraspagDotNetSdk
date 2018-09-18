@@ -51,7 +51,6 @@ namespace Braspag.Sdk.Tests.AutoFixture
                         Recurrent = false,
                         Credentials = null,
                         Assignor = null,
-                        Avs = null,
                         DebitCard = null,
                         ExternalAuthentication = null,
                         FraudAnalysis = null,
