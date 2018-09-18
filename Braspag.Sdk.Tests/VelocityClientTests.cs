@@ -33,7 +33,7 @@ namespace Braspag.Sdk.Tests
                 Transaction = new TransactionData
                 {
                     OrderId = DateTime.Now.Ticks.ToString(),
-                    Date = DateTime.Now.ToString("O"),
+                    Date = DateTime.UtcNow.ToString("O"),
                     Amount = 1000
                 },
                 Card = new CardData
