@@ -15,6 +15,9 @@ namespace Braspag.Sdk.NetCore.ExampleApp
             /* Exemplo de uso do SDK para as APIs do Cartão Protegido */
             CartaoProtegidoDemo.Run();
 
+            /* Exemplo de uso do SDK para as APIs do Velocity */
+            VelocityDemo.Run();
+
             Console.WriteLine();
             Console.WriteLine("Press any key to close the app...");
             Console.ReadKey();

@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</RepositoryUrl>
     <PackageTags>braspag pagador</PackageTags>
+    <PackageReleaseNotes>- Clientes para serviços Pagador, Cartão Protegido e Velocity Check;</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

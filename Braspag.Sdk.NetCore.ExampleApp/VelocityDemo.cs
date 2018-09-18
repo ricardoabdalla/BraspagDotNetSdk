@@ -1,22 +1,28 @@
-using System;
-using System.Collections.Generic;
-using Braspag.Sdk.BraspagAuth;
+﻿using Braspag.Sdk.BraspagAuth;
 using Braspag.Sdk.Common;
 using Braspag.Sdk.Contracts.BraspagAuth;
 using Braspag.Sdk.Contracts.Velocity;
-using Braspag.Sdk.Tests.AutoFixture;
 using Braspag.Sdk.Velocity;
-using System.Net;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xunit;
+using Environment = Braspag.Sdk.Common.Environment;
 
-namespace Braspag.Sdk.Tests
+namespace Braspag.Sdk.NetCore.ExampleApp
 {
-    public class VelocityClientTests
+    public class VelocityDemo
     {
-        [Theory, AutoNSubstituteData]
-        public async Task PerformAnalysisAsync_ForValidCreditCard_ReturnsAuthorized(VelocityClient sut, BraspagAuthClient authClient)
+        public static void Run()
         {
+            Console.WriteLine("VELOCITY");
+            Console.WriteLine("=====================================");
+
+            /* Criação do Token de Acesso OAUTH via Braspag Auth */
+            var braspagAuthClient = new BraspagAuthClient(new BraspagAuthClientOptions
+            {
+                Environment = Environment.Sandbox
+            });
+
             var authRequest = new AccessTokenRequest
             {
                 GrantType = OAuthGrantType.ClientCredentials,
@@ -25,10 +31,32 @@ namespace Braspag.Sdk.Tests
                 Scope = "VelocityApp"
             };
 
-            var authResponse = await authClient.CreateAccessTokenAsync(authRequest);
+            var authResponse = braspagAuthClient.CreateAccessTokenAsync(authRequest).Result;
 
-            Assert.Equal(HttpStatusCode.OK, authResponse.HttpStatus);
+            /* Criação do Cliente Velocity */
+            var velocityClient = new VelocityClient(new VelocityClientOptions
+            {
+                Environment = Environment.Sandbox,
+                Credentials = new MerchantCredentials
+                {
+                    MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97",
+                    AccessToken = authResponse.Token
+                }
+            });
 
+            /* Analisando uma transação com Velocity */
+            var analysisResponse = PerformAnalysisAsync(velocityClient).Result;
+
+            Console.WriteLine("Transaction analyzed");
+            Console.WriteLine($"Score: {analysisResponse.AnalysisResult.Score}");
+            Console.WriteLine($"Status: {analysisResponse.AnalysisResult.Status}");
+            Console.WriteLine($"Accept By WhiteList: {analysisResponse.AnalysisResult.AcceptByWhiteList}");
+            Console.WriteLine($"Reject By BlackList: {analysisResponse.AnalysisResult.RejectByBlackList}");
+            Console.WriteLine();
+        }
+
+        private static async Task<AnalysisResponse> PerformAnalysisAsync(IVelocityClient client)
+        {
             var request = new AnalysisRequest
             {
                 Transaction = new TransactionData
@@ -74,13 +102,7 @@ namespace Braspag.Sdk.Tests
                 }
             };
 
-            var response = await sut.PerformAnalysisAsync(request, new MerchantCredentials { AccessToken = authResponse.Token, MerchantId = "94E5EA52-79B0-7DBA-1867-BE7B081EDD97" });
-
-            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
-            Assert.NotNull(response.AnalysisResult);
-            Assert.NotNull(response.Transaction);
-            Assert.NotNull(response.RequestId);
-            Assert.Null(response.ErrorDataCollection);
+            return await client.PerformAnalysisAsync(request);
         }
     }
 }
