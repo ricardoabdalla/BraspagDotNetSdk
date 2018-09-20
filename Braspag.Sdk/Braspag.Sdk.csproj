@@ -14,7 +14,8 @@
     <RepositoryUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</RepositoryUrl>
     <PackageTags>braspag pagador</PackageTags>
     <PackageReleaseNotes>- Melhorias no cliente Pagador (AVS)</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
+    <PackageIconUrl>https://blackboxprod.blob.core.windows.net/images/braspag-new-icon.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
