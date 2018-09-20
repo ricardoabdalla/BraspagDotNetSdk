@@ -18,14 +18,14 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public long TotalOrderAmount { get; set; }
 
-        public FraudAnalysisBrowserDataRequest Browser { get; set; }
+        public FraudAnalysisBrowserData Browser { get; set; }
 
-        public FraudAnalysisCartDataRequest Cart { get; set; }
+        public FraudAnalysisCartData Cart { get; set; }
 
-        public List<FraudAnalysisMerchantDefinedFieldsDataRequest> MerchantDefinedFields { get; set; }
+        public List<FraudAnalysisMerchantDefinedFieldsData> MerchantDefinedFields { get; set; }
 
-        public FraudAnalysisShippingDataRequest Shipping { get; set; }
+        public FraudAnalysisShippingData Shipping { get; set; }
 
-        public FraudAnalysisTravelDataRequest Travel { get; set; }
+        public FraudAnalysisTravelData Travel { get; set; }
     }
 }

@@ -11,5 +11,7 @@
         public string SecurityCode { get; set; }
 
         public string Brand { get; set; }
+
+        public bool? SaveCard { get; set; }
     }
 }

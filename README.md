@@ -8,7 +8,7 @@ SDK para integração simplificada nos serviços da plataforma [Braspag](http://www
 
 | Develop | Master | NuGet.org
 |---|---|---|
-| [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=develop)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) | [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=master)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) | [![][app-metapackage-nuget-badge]][app-metapackage-nuget]
+| [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=develop)](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=develop) | [![Build status](https://braspag.visualstudio.com/Innovation/_apis/build/status/Braspag-DotNet-SDK?branchName=master)](https://braspag.visualstudio.com/Innovation/_build/latest?definitionId=470) | [![][app-metapackage-nuget-badge]][app-metapackage-nuget]
 
 > Para documentação completa das APIs e manuais, acesse [http://braspag.github.io/](http://braspag.github.io/)
 

@@ -26,5 +26,7 @@
         public bool? SaveCard { get; set; }
 
         public string Alias { get; set; }
+
+        public AvsData Avs { get; set; }
     }
 }

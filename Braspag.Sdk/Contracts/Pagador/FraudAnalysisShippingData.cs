@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisShippingDataRequest
+    public class FraudAnalysisShippingData
     {
         public string Addressee { get; set; }
 

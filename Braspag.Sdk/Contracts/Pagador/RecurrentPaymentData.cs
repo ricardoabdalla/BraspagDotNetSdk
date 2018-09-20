@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class RecurrentPaymentDataRequest
+    public class RecurrentPaymentData
     {
         public string StartDate { get; set; }
 

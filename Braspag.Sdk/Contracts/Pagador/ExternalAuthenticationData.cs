@@ -6,6 +6,6 @@
 
         public string Xid { get; set; }
 
-        public int Eci { get; set; }
+        public string Eci { get; set; }
     }
 }

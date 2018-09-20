@@ -2,12 +2,12 @@
 
 namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisCartDataRequest
+    public class FraudAnalysisCartData
     {
         public bool? IsGift { get; set; }
 
         public bool? ReturnsAccepted { get; set; }
 
-        public List<FraudAnalysisItemDataRequest> Items { get; set; }
+        public List<FraudAnalysisItemData> Items { get; set; }
     }
 }

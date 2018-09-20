@@ -2,12 +2,12 @@
 
 namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisTravelDataRequest
+    public class FraudAnalysisTravelData
     {
         public string JourneyType { get; set; }
 
         public string DepartureDateTime { get; set; }
 
-        public List<FraudAnalysisPassengerDataRequest> Passengers { get; set; }
+        public List<FraudAnalysisPassengerData> Passengers { get; set; }
     }
 }

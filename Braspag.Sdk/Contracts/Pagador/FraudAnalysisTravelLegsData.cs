@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisTravelLegsDataRequest
+    public class FraudAnalysisTravelLegsData
     {
         public string Destination { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class AvsDataRequest
+    public class AvsData
     {
         public string Cpf { get; set; }
 
@@ -13,5 +13,9 @@
         public string Complement { get; set; }
 
         public string District { get; set; }
+
+        public int Status { get; set; }
+
+        public string ReturnCode { get; set; }
     }
 }

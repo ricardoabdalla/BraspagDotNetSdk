@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class CredentialsDataRequest
+    public class CredentialsData
     {
         public string Code { get; set; }
 

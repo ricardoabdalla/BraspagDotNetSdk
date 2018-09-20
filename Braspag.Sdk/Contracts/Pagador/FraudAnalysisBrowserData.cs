@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisBrowserDataRequest
+    public class FraudAnalysisBrowserData
     {
         public bool CookiesAccepted { get; set; }
 

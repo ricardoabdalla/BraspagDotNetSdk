@@ -26,8 +26,6 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// </summary>
         public string AuthorizationCode { get; set; }
 
-        public AvsDataRequest Avs { get; set; }
-
         public string BoletoNumber { get; set; }
 
         public long? CapturedAmount { get; set; }
@@ -36,7 +34,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string Country { get; set; }
 
-        public CredentialsDataRequest Credentials { get; set; }
+        public CredentialsData Credentials { get; set; }
 
         public CreditCardData CreditCard { get; set; }
 
@@ -123,7 +121,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public bool? Recurrent { get; set; }
 
-        public RecurrentPaymentDataRequest RecurrentPayment { get; set; }
+        public RecurrentPaymentData RecurrentPayment { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -141,6 +139,6 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// </summary>
         public string Type { get; set; }
 
-        public WalletDataRequest Wallet { get; set; }
+        public WalletData Wallet { get; set; }
     }
 }
