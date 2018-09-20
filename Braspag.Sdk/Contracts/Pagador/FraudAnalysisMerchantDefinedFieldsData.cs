@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisMerchantDefinedFieldsDataRequest
+    public class FraudAnalysisMerchantDefinedFieldsData
     {
         public string Id { get; set; }
 

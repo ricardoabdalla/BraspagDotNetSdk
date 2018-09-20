@@ -58,15 +58,15 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public DebitCardData DebitCard { get; set; }
 
-        public WalletDataRequest Wallet { get; set; }
+        public WalletData Wallet { get; set; }
 
-        public CredentialsDataRequest Credentials { get; set; }
+        public CredentialsData Credentials { get; set; }
 
         public ExternalAuthenticationData ExternalAuthentication { get; set; }
 
         public FraudAnalysisRequestData FraudAnalysis { get; set; }
 
-        public RecurrentPaymentDataRequest RecurrentPayment { get; set; }
+        public RecurrentPaymentData RecurrentPayment { get; set; }
 
         public List<ExtraData> ExtraDataCollection { get; set; }
     }

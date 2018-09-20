@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisItemDataRequest
+    public class FraudAnalysisItemData
     {
         public string GiftCategory { get; set; }
 
@@ -28,6 +28,6 @@
 
         public string Type { get; set; }
 
-        public FraudAnalysisPassengerDataRequest Passenger { get; set; }
+        public FraudAnalysisPassengerData Passenger { get; set; }
     }
 }

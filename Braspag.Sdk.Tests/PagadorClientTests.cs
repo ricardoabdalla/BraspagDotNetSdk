@@ -97,6 +97,90 @@ namespace Braspag.Sdk.Tests
             Assert.Equal(3, response.Payment.CreditCard.Avs.Status);
         }
 
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_WithExternalAuthentication_ReturnsAuthorized(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.ExternalAuthentication = new ExternalAuthenticationData
+            {
+                Cavv = "AABBBlCIIgAAAAARJIgiEL0gDoE=",
+                Eci = "5",
+                Xid = "dnFoU3R4amdpWTJJdzJRVHNhNDZ"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.ExternalAuthentication);
+            Assert.Equal("AABBBlCIIgAAAAARJIgiEL0gDoE=", response.Payment.ExternalAuthentication.Cavv);
+            Assert.Equal("5", response.Payment.ExternalAuthentication.Eci);
+            Assert.Equal("dnFoU3R4amdpWTJJdzJRVHNhNDZ", response.Payment.ExternalAuthentication.Xid);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_WithAuthentication_ReturnsNotFinished(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.Authenticate = true;
+            request.Payment.ReturnUrl = "http://www.test.com/redirect";
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.NotFinished, response.Payment.Status);
+            Assert.NotNull(response.Payment.AuthenticationUrl);
+            Assert.Equal(request.Payment.ReturnUrl, response.Payment.ReturnUrl);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_WhenCardSaveIsTrue_ReturnsAuthorized(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.CreditCard.SaveCard = true;
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.CreditCard.CardToken);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_UsingCardToken_ReturnsAuthorized(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.CreditCard.Holder = null;
+            request.Payment.CreditCard.CardNumber = null;
+            request.Payment.CreditCard.Brand = null;
+            request.Payment.CreditCard.ExpirationDate = null;
+            request.Payment.CreditCard.CardToken = "283f90e4-1a90-4bf7-829f-d9e8f14215f1";
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_UsingDebitCard_ReturnsNotFinished(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.Type = "DebitCard";
+            request.Payment.CreditCard = null;
+            request.Payment.DebitCard = new DebitCardData
+            {
+                CardNumber = "4551870000000181",
+                Holder = "BJORN IRONSIDE",
+                ExpirationDate = "12/2025",
+                SecurityCode = "123",
+                Brand = "visa"
+            };
+            request.Payment.Authenticate = true;
+            request.Payment.ReturnUrl = "http://www.test.com/redirect";
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.NotFinished, response.Payment.Status);
+            Assert.NotNull(response.Payment.DebitCard);
+        }
+
         #endregion
     }
 }

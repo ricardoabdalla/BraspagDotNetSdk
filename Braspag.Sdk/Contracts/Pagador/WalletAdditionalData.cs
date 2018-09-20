@@ -1,6 +1,6 @@
 ﻿namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class WalletAdditionalDataRequest
+    public class WalletAdditionalData
     {
         public string EphemeralPublicKey { get; set; }
 

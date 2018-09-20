@@ -2,7 +2,7 @@
 
 namespace Braspag.Sdk.Contracts.Pagador
 {
-    public class FraudAnalysisPassengerDataRequest
+    public class FraudAnalysisPassengerData
     {
         public string Email { get; set; }
 
@@ -20,6 +20,6 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string FrequentFlyerNumber { get; set; }
 
-        public List<FraudAnalysisTravelLegsDataRequest> TravelLegs { get; set; }
+        public List<FraudAnalysisTravelLegsData> TravelLegs { get; set; }
     }
 }
