@@ -139,6 +139,11 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// </summary>
         public string Type { get; set; }
 
+        /// <summary>
+        /// ID da transação na adquirente (Wallets)
+        /// </summary>
+        public string Tid { get; set; }
+
         public WalletData Wallet { get; set; }
     }
 }
