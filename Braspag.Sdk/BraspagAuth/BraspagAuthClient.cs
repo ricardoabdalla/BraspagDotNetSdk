@@ -13,6 +13,8 @@ namespace Braspag.Sdk.BraspagAuth
 {
     public class BraspagAuthClient : IBraspagAuthClient
     {
+        private readonly string _assemblyVersion;
+
         private BraspagAuthClientOptions _options;
 
         public IRestClient RestClient { get; }
@@ -24,6 +26,7 @@ namespace Braspag.Sdk.BraspagAuth
             _options = options ?? throw new ArgumentNullException(nameof(options));
             RestClient = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.BraspagAuthProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.BraspagAuthSandbox) };
             JsonDeserializer = new JsonDeserializer();
+            _assemblyVersion = System.Reflection.Assembly.GetAssembly(typeof(IBraspagAuthClient)).GetName().Version.ToString();
         }
 
         public async Task<AccessTokenResponse> CreateAccessTokenAsync(AccessTokenRequest request)
@@ -42,6 +45,7 @@ namespace Braspag.Sdk.BraspagAuth
             var httpRequest = new RestRequest(@"oauth2/token", Method.POST) { RequestFormat = DataFormat.Json };
             httpRequest.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             httpRequest.AddHeader("Authorization", $"Basic {credentials}");
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
 
             var sb = new StringBuilder();
             sb.Append($"grant_type={request.GrantType.GetAttributeOfType<DescriptionAttribute>().Description}");

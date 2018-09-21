@@ -16,9 +16,9 @@ namespace Braspag.Sdk.Pagador
     {
         private readonly MerchantCredentials _credentials;
 
-        private PagadorClientOptions _options;
-
         private readonly string _assemblyVersion;
+
+        private PagadorClientOptions _options;
 
         public IRestClient RestClientApi { get; }
 

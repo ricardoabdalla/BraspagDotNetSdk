@@ -8,13 +8,14 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Environment = Braspag.Sdk.Common.Environment;
-using MerchantCredentials = Braspag.Sdk.Contracts.Velocity.MerchantCredentials;
 
 namespace Braspag.Sdk.Velocity
 {
     public class VelocityClient : IVelocityClient
     {
         private readonly MerchantCredentials _credentials;
+
+        private readonly string _assemblyVersion;
 
         private VelocityClientOptions _options;
 
@@ -28,6 +29,7 @@ namespace Braspag.Sdk.Velocity
             _credentials = options.Credentials;
             RestClient = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.VelocityApiProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.VelocityApiSandbox) };
             JsonDeserializer = new JsonDeserializer();
+            _assemblyVersion = System.Reflection.Assembly.GetAssembly(typeof(IVelocityClient)).GetName().Version.ToString();
         }
 
         public async Task<AnalysisResponse> PerformAnalysisAsync(AnalysisRequest request, MerchantCredentials credentials = null)
@@ -51,6 +53,7 @@ namespace Braspag.Sdk.Velocity
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("Authorization", $"Bearer {currentCredentials.AccessToken}");
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddBody(new { request.Transaction, request.Card, request.Customer });
 
             var cancellationTokenSource = new CancellationTokenSource();

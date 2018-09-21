@@ -15,6 +15,8 @@ namespace Braspag.Sdk.CartaoProtegido
     {
         private readonly MerchantCredentials _credentials;
 
+        private readonly string _assemblyVersion;
+
         private CartaoProtegidoClientOptions _options;
 
         public IRestClient RestClient { get; }
@@ -27,6 +29,7 @@ namespace Braspag.Sdk.CartaoProtegido
             _credentials = options.Credentials;
             RestClient = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.CartaoProtegidoProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.CartaoProtegidoSandbox) };
             XmlDeserializer = new XmlDeserializer();
+            _assemblyVersion = System.Reflection.Assembly.GetAssembly(typeof(ICartaoProtegidoClient)).GetName().Version.ToString();
         }
 
         public async Task<GetCreditCardResponse> GetCreditCardAsync(GetCreditCardRequest request, MerchantCredentials credentials = null)
@@ -64,6 +67,7 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("</soap:Body>");
             sb.AppendLine("</soap:Envelope>");
 
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -118,6 +122,7 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("</soap:Body>");
             sb.AppendLine("</soap:Envelope>");
 
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -171,6 +176,7 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("</soap:Body>");
             sb.AppendLine("</soap:Envelope>");
 
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -230,6 +236,7 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("</soap:Body>");
             sb.AppendLine("</soap:Envelope>");
 
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -284,6 +291,7 @@ namespace Braspag.Sdk.CartaoProtegido
             sb.AppendLine("</soap:Body>");
             sb.AppendLine("</soap:Envelope>");
 
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddParameter("text/xml", sb.ToString(), ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
