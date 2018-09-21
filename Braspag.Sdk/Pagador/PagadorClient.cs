@@ -203,5 +203,70 @@ namespace Braspag.Sdk.Pagador
             jsonResponse.HttpStatus = httpResponse.StatusCode;
             return jsonResponse;
         }
+
+        public async Task<PaymentIdResponse> GetByOrderIdAsync(string orderId, MerchantCredentials credentials = null)
+        {
+            if (string.IsNullOrWhiteSpace(orderId))
+                throw new ArgumentNullException(nameof(orderId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/sales/", Method.GET) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddQueryParameter("merchantOrderId", orderId);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientQueryApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+
+            var jsonResponse = JsonDeserializer.Deserialize<PaymentIdResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
+        }
+
+        public async Task<HttpStatusCode> ChangeRecurrencyCustomer(string recurrentPaymentId, CustomerData customer, MerchantCredentials credentials = null)
+        {
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/customer", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(customer);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
+        }
     }
 }

@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
 using Braspag.Sdk.BraspagAuth;
 using Braspag.Sdk.Common;
 using Braspag.Sdk.Contracts.BraspagAuth;
 using Braspag.Sdk.Contracts.Velocity;
 using Braspag.Sdk.Tests.AutoFixture;
 using Braspag.Sdk.Velocity;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Braspag.Sdk.Tests
+namespace Braspag.Sdk.Tests.IntegrationTests
 {
     public class VelocityClientTests
     {

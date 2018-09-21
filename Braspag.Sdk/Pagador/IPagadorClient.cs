@@ -1,4 +1,5 @@
-﻿using Braspag.Sdk.Contracts.Pagador;
+﻿using System.Net;
+using Braspag.Sdk.Contracts.Pagador;
 using System.Threading.Tasks;
 
 namespace Braspag.Sdk.Pagador
@@ -12,5 +13,9 @@ namespace Braspag.Sdk.Pagador
         Task<VoidResponse> VoidAsync(VoidRequest request, MerchantCredentials credentials = null);
 
         Task<SaleResponse> GetAsync(string paymentId, MerchantCredentials credentials = null);
+
+        Task<PaymentIdResponse> GetByOrderIdAsync(string orderId, MerchantCredentials credentials = null);
+
+        Task<HttpStatusCode> ChangeRecurrencyCustomer(string recurrentPaymentId, CustomerData customer, MerchantCredentials credentials = null);
     }
 }

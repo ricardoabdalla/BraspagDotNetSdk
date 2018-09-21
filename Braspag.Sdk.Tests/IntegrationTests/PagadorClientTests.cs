@@ -1,15 +1,12 @@
 using Braspag.Sdk.Contracts.Pagador;
 using Braspag.Sdk.Pagador;
 using Braspag.Sdk.Tests.AutoFixture;
-using NSubstitute;
-using RestSharp;
 using System;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Braspag.Sdk.Tests
+namespace Braspag.Sdk.Tests.IntegrationTests
 {
     public class PagadorClientTests
     {
@@ -229,6 +226,101 @@ namespace Braspag.Sdk.Tests
             Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
             Assert.NotNull(response.Payment.RecurrentPayment.Interval);
             Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+        }
+
+        #endregion
+
+        #region MultiStep_Tests
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_ThenCaptureAsync_ThenVoidAsync_ThenGetAsync(PagadorClient sut, SaleRequest request)
+        {
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+
+            var captureRequest = new CaptureRequest
+            {
+                PaymentId = response.Payment.PaymentId,
+                Amount = response.Payment.Amount
+            };
+
+            var captureResponse = await sut.CaptureAsync(captureRequest);
+
+            Assert.Equal(HttpStatusCode.OK, captureResponse.HttpStatus);
+            Assert.Equal(TransactionStatus.PaymentConfirmed, captureResponse.Status);
+
+            var voidRequest = new VoidRequest
+            {
+                PaymentId = response.Payment.PaymentId,
+                Amount = response.Payment.Amount
+            };
+
+            var voidResponse = await sut.VoidAsync(voidRequest);
+
+            Assert.Equal(HttpStatusCode.OK, voidResponse.HttpStatus);
+            Assert.Equal(TransactionStatus.Voided, voidResponse.Status);
+
+            var getResponse = await sut.GetAsync(response.Payment.PaymentId);
+
+            Assert.Equal(HttpStatusCode.OK, getResponse.HttpStatus);
+            Assert.NotNull(getResponse.MerchantOrderId);
+            Assert.NotNull(getResponse.Customer);
+            Assert.NotNull(getResponse.Payment);
+            Assert.Equal(TransactionStatus.Voided, getResponse.Payment.Status);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_ThenGetByOrderIdAsync(PagadorClient sut, SaleRequest request)
+        {
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+
+            var getResponse = await sut.GetByOrderIdAsync(response.MerchantOrderId);
+
+            Assert.Equal(HttpStatusCode.OK, getResponse.HttpStatus);
+            Assert.NotEmpty(getResponse.Payments);
+            Assert.NotNull(getResponse.Payments[0].PaymentId);
+        }
+
+        #endregion
+
+        #region Recurrent
+
+        [Theory, AutoNSubstituteData]
+        public async Task ChangeRecurrencyCustomer_ReturnsOk(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+
+            var customer = new CustomerData
+            {
+                Name = "Ragnar Lothbrok",
+                Email = "ragnar.lothbrok@vikings.com.br",
+                IdentityType = "CPF",
+                Identity = "637.952.420-70"
+            };
+
+            var recurrentResponse = await sut.ChangeRecurrencyCustomer(response.Payment.RecurrentPayment.RecurrentPaymentId, customer);
+
+            Assert.Equal(HttpStatusCode.OK, recurrentResponse);
         }
 
         #endregion

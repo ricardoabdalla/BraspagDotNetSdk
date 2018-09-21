@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Braspag.Sdk.Tests
+namespace Braspag.Sdk.Tests.IntegrationTests
 {
     public class BraspagAuthClientTests
     {
