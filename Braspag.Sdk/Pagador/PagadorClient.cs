@@ -18,6 +18,8 @@ namespace Braspag.Sdk.Pagador
 
         private PagadorClientOptions _options;
 
+        private readonly string _assemblyVersion;
+
         public IRestClient RestClientApi { get; }
 
         public IRestClient RestClientQueryApi { get; }
@@ -31,6 +33,7 @@ namespace Braspag.Sdk.Pagador
             RestClientApi = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.PagadorApiProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.PagadorApiSandbox) };
             RestClientQueryApi = _options.Environment == Environment.Production ? new RestClient { BaseUrl = new Uri(Endpoints.PagadorQueryApiProduction) } : new RestClient { BaseUrl = new Uri(Endpoints.PagadorQueryApiSandbox) };
             JsonDeserializer = new JsonDeserializer();
+            _assemblyVersion = System.Reflection.Assembly.GetAssembly(typeof(IPagadorClient)).GetName().Version.ToString();
         }
 
         public async Task<SaleResponse> CreateSaleAsync(SaleRequest request, MerchantCredentials credentials = null)
@@ -54,6 +57,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddBody(new { request.MerchantOrderId, request.Customer, request.Payment });
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -95,6 +99,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("paymentId", request.PaymentId);
             httpRequest.AddQueryParameter("amount", request.Amount.ToString(CultureInfo.InvariantCulture));
 
@@ -142,6 +147,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("paymentId", request.PaymentId);
             httpRequest.AddQueryParameter("amount", request.Amount.ToString(CultureInfo.InvariantCulture));
 
@@ -184,6 +190,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("paymentId", paymentId);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -225,6 +232,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddQueryParameter("merchantOrderId", orderId);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -260,6 +268,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(customer);
 
@@ -293,6 +302,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(endDate);
 
@@ -323,6 +333,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(interval);
 
@@ -353,6 +364,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(day);
 
@@ -383,6 +395,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(amount);
 
@@ -416,6 +429,7 @@ namespace Braspag.Sdk.Pagador
             httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
             httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
             httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
             httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
             httpRequest.AddBody(nextPaymentDate);
 
