@@ -13,8 +13,9 @@
     <PackageProjectUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</RepositoryUrl>
     <PackageTags>braspag pagador</PackageTags>
-    <PackageReleaseNotes>- Ajustes nos contratos de boleto registrado do Pagador</PackageReleaseNotes>
-    <Version>1.1.1</Version>
+    <PackageReleaseNotes>- Ajustes nos contratos de boleto registrado do Pagador
+- Ajustes nos contratos de recorrência do Pagador</PackageReleaseNotes>
+    <Version>1.2.0</Version>
     <PackageIconUrl>https://blackboxprod.blob.core.windows.net/images/braspag-new-icon.png</PackageIconUrl>
     <Product>Braspag.SDK</Product>
     <PackageId>Braspag.SDK</PackageId>

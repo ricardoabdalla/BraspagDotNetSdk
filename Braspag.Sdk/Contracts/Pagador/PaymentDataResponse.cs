@@ -127,7 +127,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public bool? Recurrent { get; set; }
 
-        public RecurrentPaymentData RecurrentPayment { get; set; }
+        public RecurrentPaymentDataResponse RecurrentPayment { get; set; }
 
         public string ReturnUrl { get; set; }
 

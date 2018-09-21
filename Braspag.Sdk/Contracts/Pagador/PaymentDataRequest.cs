@@ -72,7 +72,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public FraudAnalysisRequestData FraudAnalysis { get; set; }
 
-        public RecurrentPaymentData RecurrentPayment { get; set; }
+        public RecurrentPaymentDataRequest RecurrentPayment { get; set; }
 
         public List<ExtraData> ExtraDataCollection { get; set; }
     }
