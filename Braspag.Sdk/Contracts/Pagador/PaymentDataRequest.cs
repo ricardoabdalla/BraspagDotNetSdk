@@ -36,8 +36,14 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public string Demonstrative { get; set; }
 
+        /// <summary>
+        /// Data para vencimento do boleto. Formato: AAAA-MM-DD
+        /// </summary>
         public string ExpirationDate { get; set; }
 
+        /// <summary>
+        /// CNPJ do Cedente
+        /// </summary>
         public string Identification { get; set; }
 
         public string Instructions { get; set; }
