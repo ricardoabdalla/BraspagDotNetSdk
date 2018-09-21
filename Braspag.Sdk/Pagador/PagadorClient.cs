@@ -268,5 +268,50 @@ namespace Braspag.Sdk.Pagador
             var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
             return httpResponse.StatusCode;
         }
+
+        public Task<HttpStatusCode> ChangeRecurrencyEndDate(string recurrentPaymentId, string endDate, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ChangeRecurrencyInterval(string recurrentPaymentId, string interval, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ChangeRecurrencyDay(string recurrentPaymentId, int day, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ChangeRecurrencyAmount(string recurrentPaymentId, long amount, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ChangeRecurrencyNextPaymentDate(string recurrentPaymentId, string nextPaymentDate, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ChangeRecurrencyPayment(string recurrentPaymentId, PaymentDataRequest payment, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> DeactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HttpStatusCode> ReactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RecurrentDataResponse> GetRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
