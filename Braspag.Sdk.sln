@@ -9,12 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Braspag.Sdk.NetCore.Example
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03199C7F-EE19-472F-8171-86C0C52D26EA}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
 		README.md = README.md
 		StyleCop\stylecop.json = StyleCop\stylecop.json
 		StyleCop\stylecop.ruleset = StyleCop\stylecop.ruleset
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Braspag.Sdk.Tests", "Braspag.Sdk.Tests\Braspag.Sdk.Tests.csproj", "{E16FF413-1C86-44AF-9BC3-C34B1E70A599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Braspag.Sdk.Tests", "Braspag.Sdk.Tests\Braspag.Sdk.Tests.csproj", "{E16FF413-1C86-44AF-9BC3-C34B1E70A599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
