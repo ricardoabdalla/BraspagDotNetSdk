@@ -269,29 +269,160 @@ namespace Braspag.Sdk.Pagador
             return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyEndDate(string recurrentPaymentId, string endDate, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyEndDate(string recurrentPaymentId, string endDate, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (string.IsNullOrWhiteSpace(endDate))
+                throw new ArgumentNullException(nameof(endDate));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/enddate", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(endDate);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyInterval(string recurrentPaymentId, string interval, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyInterval(string recurrentPaymentId, RecurrencyInterval interval, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/interval", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(interval);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyDay(string recurrentPaymentId, int day, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyDay(string recurrentPaymentId, int day, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/recurrencyday", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(day);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyAmount(string recurrentPaymentId, long amount, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyAmount(string recurrentPaymentId, long amount, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/amount", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(amount);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyNextPaymentDate(string recurrentPaymentId, string nextPaymentDate, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyNextPaymentDate(string recurrentPaymentId, string nextPaymentDate, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (string.IsNullOrWhiteSpace(nextPaymentDate))
+                throw new ArgumentNullException(nameof(nextPaymentDate));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/nextPaymentDate", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(nextPaymentDate);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
         public Task<HttpStatusCode> ChangeRecurrencyPayment(string recurrentPaymentId, PaymentDataRequest payment, MerchantCredentials credentials = null)

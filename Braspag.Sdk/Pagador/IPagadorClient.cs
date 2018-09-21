@@ -1,5 +1,5 @@
-﻿using System.Net;
-using Braspag.Sdk.Contracts.Pagador;
+﻿using Braspag.Sdk.Contracts.Pagador;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Braspag.Sdk.Pagador
@@ -20,7 +20,7 @@ namespace Braspag.Sdk.Pagador
 
         Task<HttpStatusCode> ChangeRecurrencyEndDate(string recurrentPaymentId, string endDate, MerchantCredentials credentials = null);
 
-        Task<HttpStatusCode> ChangeRecurrencyInterval(string recurrentPaymentId, string interval, MerchantCredentials credentials = null);
+        Task<HttpStatusCode> ChangeRecurrencyInterval(string recurrentPaymentId, RecurrencyInterval interval, MerchantCredentials credentials = null);
 
         Task<HttpStatusCode> ChangeRecurrencyDay(string recurrentPaymentId, int day, MerchantCredentials credentials = null);
 
