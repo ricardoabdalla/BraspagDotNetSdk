@@ -452,6 +452,125 @@ namespace Braspag.Sdk.Tests.IntegrationTests
             Assert.Equal(HttpStatusCode.OK, recurrentResponse);
         }
 
+        [Theory, AutoNSubstituteData]
+        public async Task ChangeRecurrencyPayment_ReturnsOk(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+
+            var payment = new PaymentDataRequest
+            {
+                Amount = 1000,
+                Provider = "Simulado",
+                Type = "CreditCard",
+                Currency = "BRL",
+                Country = "BRA",
+                Installments = 1,
+                SoftDescriptor = "Braspag SDK",
+                CreditCard = new CreditCardData
+                {
+                    CardNumber = "1000100010001001",
+                    Holder = "BJORN IRONSIDE",
+                    ExpirationDate = "12/2021",
+                    Brand = "master"
+                }
+            };
+
+            var recurrentResponse = await sut.ChangeRecurrencyPayment(response.Payment.RecurrentPayment.RecurrentPaymentId, payment);
+
+            Assert.Equal(HttpStatusCode.OK, recurrentResponse);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task DeactivateRecurrency_ReturnsOk(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+
+            var recurrentResponse = await sut.DeactivateRecurrency(response.Payment.RecurrentPayment.RecurrentPaymentId);
+
+            Assert.Equal(HttpStatusCode.OK, recurrentResponse);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task ReactivateRecurrency_ReturnsOk(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+
+            var reactivateResponse = await sut.ReactivateRecurrency(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.Equal(HttpStatusCode.OK, reactivateResponse);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task GetRecurrency_ReturnsOk(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
+
+            var getResponse = await sut.GetRecurrency(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.Equal(HttpStatusCode.OK, getResponse.HttpStatus);
+            Assert.NotNull(getResponse.Customer);
+            Assert.NotNull(getResponse.RecurrentPayment);
+            Assert.NotEmpty(getResponse.RecurrentPayment.RecurrentTransactions);
+        }
+
         #endregion
     }
 }

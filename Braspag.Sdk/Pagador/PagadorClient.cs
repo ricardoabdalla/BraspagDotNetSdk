@@ -439,24 +439,139 @@ namespace Braspag.Sdk.Pagador
             return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ChangeRecurrencyPayment(string recurrentPaymentId, PaymentDataRequest payment, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ChangeRecurrencyPayment(string recurrentPaymentId, PaymentDataRequest payment, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (payment == null)
+                throw new ArgumentNullException(nameof(payment));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/payment", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+            httpRequest.AddBody(payment);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> DeactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> DeactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/deactivate", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<HttpStatusCode> ReactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        public async Task<HttpStatusCode> ReactivateRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}/reactivate", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+            return httpResponse.StatusCode;
         }
 
-        public Task<RecurrentDataResponse> GetRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
+        public async Task<RecurrentDataResponse> GetRecurrency(string recurrentPaymentId, MerchantCredentials credentials = null)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(recurrentPaymentId))
+                throw new ArgumentNullException(nameof(recurrentPaymentId));
+
+            if (_credentials == null && credentials == null)
+                throw new InvalidOperationException("Credentials are null");
+
+            var currentCredentials = credentials ?? _credentials;
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantId))
+                throw new InvalidOperationException("Invalid credentials: MerchantId is null");
+
+            if (string.IsNullOrWhiteSpace(currentCredentials.MerchantKey))
+                throw new InvalidOperationException("Invalid credentials: MerchantKey is null");
+
+            var httpRequest = new RestRequest(@"v2/recurrentpayment/{recurrentPaymentId}", Method.GET) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            httpRequest.AddHeader("MerchantId", currentCredentials.MerchantId);
+            httpRequest.AddHeader("MerchantKey", currentCredentials.MerchantKey);
+            httpRequest.AddHeader("RequestId", Guid.NewGuid().ToString());
+            httpRequest.AddHeader("Braspag-SDK-Version", _assemblyVersion);
+            httpRequest.AddUrlSegment("recurrentPaymentId", recurrentPaymentId);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+
+            var httpResponse = await RestClientQueryApi.ExecuteTaskAsync(httpRequest, cancellationTokenSource.Token);
+
+            if (httpResponse.StatusCode != HttpStatusCode.OK)
+            {
+                return new RecurrentDataResponse
+                {
+                    HttpStatus = httpResponse.StatusCode
+                };
+            }
+
+            var jsonResponse = JsonDeserializer.Deserialize<RecurrentDataResponse>(httpResponse);
+            jsonResponse.HttpStatus = httpResponse.StatusCode;
+            return jsonResponse;
         }
     }
 }
