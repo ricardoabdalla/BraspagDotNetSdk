@@ -14,6 +14,8 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// </summary>
         public long Amount { get; set; }
 
+        public string Address { get; set; }
+
         /// <summary>
         /// URL para qual o Lojista deve redirecionar o Cliente para o fluxo de autenticação
         /// </summary>
@@ -25,6 +27,8 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// Código de autorização da transação
         /// </summary>
         public string AuthorizationCode { get; set; }
+
+        public string BarCodeNumber { get; set; }
 
         public string BoletoNumber { get; set; }
 
@@ -47,6 +51,8 @@ namespace Braspag.Sdk.Contracts.Pagador
         public DebitCardData DebitCard { get; set; }
 
         public string Demonstrative { get; set; }
+
+        public string DigitableLine { get; set; }
 
         public string Eci { get; set; }
 
@@ -121,7 +127,7 @@ namespace Braspag.Sdk.Contracts.Pagador
 
         public bool? Recurrent { get; set; }
 
-        public RecurrentPaymentData RecurrentPayment { get; set; }
+        public RecurrentPaymentDataResponse RecurrentPayment { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -138,6 +144,13 @@ namespace Braspag.Sdk.Contracts.Pagador
         /// Tipo do Meio de Pagamento (CreditCard, DebitCard)
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// ID da transação na adquirente (Wallets)
+        /// </summary>
+        public string Tid { get; set; }
+
+        public string Url { get; set; }
 
         public WalletData Wallet { get; set; }
     }

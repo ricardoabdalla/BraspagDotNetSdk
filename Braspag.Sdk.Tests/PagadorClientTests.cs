@@ -1,11 +1,12 @@
 using Braspag.Sdk.Contracts.Pagador;
 using Braspag.Sdk.Pagador;
 using Braspag.Sdk.Tests.AutoFixture;
+using NSubstitute;
+using RestSharp;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using NSubstitute;
-using RestSharp;
 using Xunit;
 
 namespace Braspag.Sdk.Tests
@@ -179,6 +180,55 @@ namespace Braspag.Sdk.Tests
             Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
             Assert.Equal(TransactionStatus.NotFinished, response.Payment.Status);
             Assert.NotNull(response.Payment.DebitCard);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_UsingRegisteredBoleto_ReturnsAuthorized(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.Type = "Boleto";
+            request.Payment.CreditCard = null;
+            request.Payment.BoletoNumber = "2017091101";
+            request.Payment.Assignor = "Braspag";
+            request.Payment.Demonstrative = "Texto demonstrativo";
+            request.Payment.ExpirationDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            request.Payment.Identification = "11017523000167";
+            request.Payment.Instructions = "Aceitar somente até a data de vencimento.";
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.Assignor);
+            Assert.NotNull(response.Payment.Address);
+            Assert.NotNull(response.Payment.BarCodeNumber);
+            Assert.NotNull(response.Payment.BoletoNumber);
+            Assert.NotNull(response.Payment.Demonstrative);
+            Assert.NotNull(response.Payment.DigitableLine);
+            Assert.NotNull(response.Payment.ExpirationDate);
+            Assert.NotNull(response.Payment.Identification);
+            Assert.NotNull(response.Payment.Instructions);
+            Assert.NotNull(response.Payment.Url);
+        }
+
+        [Theory, AutoNSubstituteData]
+        public async Task CreateSaleAsync_UsingRecurrentPayment_ReturnsAuthorized(PagadorClient sut, SaleRequest request)
+        {
+            request.Payment.RecurrentPayment = new RecurrentPaymentDataRequest
+            {
+                AuthorizeNow = true,
+                EndDate = DateTime.UtcNow.AddMonths(3).ToString("yyyy-MM-dd"),
+                Interval = "Monthly"
+            };
+
+            var response = await sut.CreateSaleAsync(request);
+
+            Assert.Equal(HttpStatusCode.Created, response.HttpStatus);
+            Assert.Equal(TransactionStatus.Authorized, response.Payment.Status);
+            Assert.NotNull(response.Payment.RecurrentPayment);
+            Assert.NotNull(response.Payment.RecurrentPayment.RecurrentPaymentId);
+            Assert.NotNull(response.Payment.RecurrentPayment.NextRecurrency);
+            Assert.NotNull(response.Payment.RecurrentPayment.Interval);
+            Assert.NotNull(response.Payment.RecurrentPayment.EndDate);
         }
 
         #endregion
