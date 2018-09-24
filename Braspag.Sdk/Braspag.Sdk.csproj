@@ -14,8 +14,9 @@
     <RepositoryUrl>https://github.com/ricardoabdalla/BraspagDotNetSdk</RepositoryUrl>
     <PackageTags>braspag pagador</PackageTags>
     <PackageReleaseNotes>- Inclusão de operações para gerenciamento de recorrências
-- Obtenção de dados de transação do Pagador por número de pedido da loja</PackageReleaseNotes>
-    <Version>1.3.0</Version>
+- Obtenção de dados de transação do Pagador por número de pedido da loja
+- Inclusão do campo PaymentToken no nó CreditCard para integração do Silent Order Post</PackageReleaseNotes>
+    <Version>1.3.1</Version>
     <PackageIconUrl>https://blackboxprod.blob.core.windows.net/images/braspag-new-icon.png</PackageIconUrl>
     <Product>Braspag.SDK</Product>
     <PackageId>Braspag.SDK</PackageId>

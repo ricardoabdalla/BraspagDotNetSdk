@@ -19,6 +19,11 @@
         public string SecurityCode { get; set; }
 
         /// <summary>
+        /// Token obtido através do Silent Order Post
+        /// </summary>
+        public string PaymentToken { get; set; }
+
+        /// <summary>
         /// Bandeira do cartão
         /// </summary>
         public string Brand { get; set; }
